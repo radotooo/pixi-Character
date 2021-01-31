@@ -1,4 +1,5 @@
 import Rocket from '../Rocket';
+import Fire from '../Fire';
 
 export default class Rocket1 extends Rocket {
   constructor() {
@@ -7,7 +8,8 @@ export default class Rocket1 extends Rocket {
       acceleration: 30,
       handling: 5,
       speed: 70,
-      name: 'rocket-1'
+      name: 'rocket-1',
     });
+    this.addFire(310, 270, 210);
   }
 }

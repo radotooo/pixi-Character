@@ -1,5 +1,6 @@
-import { Container, Sprite } from "pixi.js";
-import gsap from "gsap";
+import { Container, Sprite } from 'pixi.js';
+import gsap from 'gsap';
+import Fire from './Fire';
 
 export default class Rocket extends Container {
   /**
@@ -19,23 +20,57 @@ export default class Rocket extends Container {
     this._handling = handling;
 
     this._inner = new Container();
+    this._inner.sortableChildren = true;
     this._inner.name = 'rocket-inner';
+
+    this._fire = new Fire();
+
     this.addChild(this._inner);
-    
     this._createBody(textureName);
   }
 
   async show() {
-    await gsap.fromTo(this._inner, { y: -150, alpha: 0}, { y: 0, alpha: 1, ease: 'elastic(1,0.5)', duration: 1.5 });
+    await gsap.fromTo(
+      this._inner,
+      { y: -150, alpha: 0 },
+      { y: 0, alpha: 1, ease: 'elastic(1,0.5)', duration: 1.5 }
+    );
     this.idle();
   }
 
   async hide() {
-    await gsap.to(this._inner, { y: -150, alpha: 0, ease: 'back(1, 0.5)', duration: 1.5 });
+    await gsap.to(this._inner, {
+      y: -150,
+      alpha: 0,
+      ease: 'back(1, 0.5)',
+      duration: 1.5,
+    });
   }
 
   idle() {
-    gsap.fromTo(this._inner, { y: 0 }, { y: -20, yoyo: true, repeat: -1, duration: 2 });
+    gsap.fromTo(
+      this._inner,
+      { y: 0 },
+      { y: -20, yoyo: true, repeat: -1, duration: 2 }
+    );
+  }
+
+  ignite() {
+    this._fire.ignite();
+  }
+
+  extinguish() {
+    this._fire.extinguish();
+  }
+
+  addFire(x, y, angle, scaleX = 1, scaleY = 1) {
+    this._fire.x = x;
+    this._fire.y = y;
+    this._fire.scale.x = scaleX;
+    this._fire.scale.y = scaleY;
+    this._fire.zIndex = -100;
+    this._fire.angle = angle;
+    this._inner.addChild(this._fire);
   }
 
   /**

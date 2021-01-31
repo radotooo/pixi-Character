@@ -24,6 +24,7 @@ export default class ProgressBar extends Container {
 
     this._createBackground();
     this._createBadge();
+    this._createBar();
 
     this.set({ value });
   }
@@ -33,7 +34,16 @@ export default class ProgressBar extends Container {
     this._badge.getChildByName('value').text = `${this._label.toUpperCase()}: ${
       this._value
     }`;
+
+    this.removeChild(this._bar);
+    this._createBar();
   }
+
+  /**
+   * @readonly
+   * @memberof ProgressBar
+   * @returns {PIXI.Graphics}
+   */
   get bar() {
     return this._bar;
   }
@@ -58,6 +68,18 @@ export default class ProgressBar extends Container {
     this._background.alpha = 0.1;
     this._background.x = -this._width / 2;
     this.addChild(this._background);
+  }
+
+  /**
+   * @private
+   */
+  _createBar() {
+    this._bar = new Graphics();
+    this._bar.beginFill(0x2a9df3);
+    this._bar.drawRect(0, 0, this._value * 5, 25);
+    this._bar.endFill();
+    this._bar.x = -this._width / 2;
+    this.addChild(this._bar);
   }
 
   /**

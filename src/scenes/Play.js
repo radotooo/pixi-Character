@@ -2,7 +2,7 @@ import Scene from './Scene';
 import Footer from '../components/Footer';
 
 import Rocket1 from '../components/rockets/Rocket1';
-import Rocket2 from '../components/rockets/Rocket2';
+import Rocket2 from '../components/rockets/Rocket2.js';
 import Rocket3 from '../components/rockets/Rocket3';
 import Rocket4 from '../components/rockets/Rocket4';
 
@@ -28,15 +28,14 @@ export default class Play extends Scene {
     arrowLeft.name = 'arrow-left';
     arrowLeft.x = -500;
     arrowLeft.on('click', () => this.prev());
+    this.addChild(arrowLeft);
 
     const arrowRight = new Arrow();
     arrowRight.name = 'arrow-right';
     arrowRight.x = 500;
     arrowRight.angle = 180;
     arrowRight.on('click', () => this.next());
-
     this.addChild(arrowRight);
-    this.addChild(arrowLeft);
 
     this._stats = new Stats({
       data: {
@@ -57,7 +56,7 @@ export default class Play extends Scene {
     this._stats.y = 130;
     this.addChild(this._stats);
 
-    this.setRocket(3);
+    this.setRocket(0);
   }
 
   setRocket(index) {

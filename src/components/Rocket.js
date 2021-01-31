@@ -63,6 +63,9 @@ export default class Rocket extends Container {
     this._fire.extinguish();
   }
 
+  /**
+   * @description Crate instance of Fire all values are PIXI container properties
+   */
   addFire(x, y, angle, scaleX = 1, scaleY = 1) {
     this._fire.x = x;
     this._fire.y = y;

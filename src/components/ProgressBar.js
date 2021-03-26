@@ -34,10 +34,28 @@ export default class ProgressBar extends Container {
   }
 
   /**
+   * @readonly
+   * @memberof ProgressBar
+   * @returns {PIXI.Graphics}
+   */
+  get bar() {
+    return this._bar;
+  }
+
+  /**
+   * @readonly
+   * @memberof ProgressBar
+   * @returns {PIXI.Graphics}
+   */
+  get background() {
+    return this._background;
+  }
+
+  /**
    * @param {String} value The value on top of the bar
    * @public
    */
-  setValue({ value }) {
+  set({ value }) {
     this._value = value;
     this._badge.getChildByName('value').text = `${this._label.toUpperCase()}: ${
       this._value

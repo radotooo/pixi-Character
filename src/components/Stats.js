@@ -27,7 +27,7 @@ export default class Stats extends Container {
    */
   setProgressBarData(data = {}) {
     Object.keys(data).forEach((key) => {
-      this._items[key].setValue({ value: data[key] });
+      this._items[key].set({ value: data[key] });
     });
   }
 

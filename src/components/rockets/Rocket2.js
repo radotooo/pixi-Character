@@ -1,5 +1,10 @@
 import Rocket from '../Rocket';
 
+/**
+ * Initializes a new instance of Rocket2
+ * @class
+ * @extends {Rocket}
+ */
 export default class Rocket2 extends Rocket {
   constructor() {
     super({
@@ -9,6 +14,7 @@ export default class Rocket2 extends Rocket {
       speed: 75,
       name: 'rocket-2',
     });
+
     this.addFire(290, 245, 200);
   }
 }

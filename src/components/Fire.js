@@ -1,7 +1,11 @@
-import { Container, Spritesheet, Texture, AnimatedSprite, BLEND_MODES } from "pixi.js";
-import data from '../static/fire.json';
+import { Container, AnimatedSprite, BLEND_MODES } from 'pixi.js';
 import Assets from '../core/AssetManager';
 
+/**
+ * Initializes a new instance of Fire
+ * @class
+ * @extends {PIXI.Container}
+ */
 export default class Fire extends Container {
   constructor() {
     super();
@@ -23,12 +27,18 @@ export default class Fire extends Container {
     this.ignite();
   }
 
+  /**
+   * @public
+   */
   ignite() {
     this._top.play();
     this._bottom.play();
     this.alpha = 1;
   }
 
+  /**
+   * @public
+   */
   extinguish() {
     this._top.pause();
     this._bottom.pause();

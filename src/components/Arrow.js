@@ -1,6 +1,11 @@
-import { Sprite, Texture } from "pixi.js";
-import gsap from "gsap";
+import { Sprite, Texture } from 'pixi.js';
+import gsap from 'gsap';
 
+/**
+ * Initializes a new instance of Arrow
+ * @class
+ * @extends {PIXI.Sprite}
+ */
 export default class Arrow extends Sprite {
   constructor() {
     super(Texture.from('arrow'));
@@ -19,7 +24,7 @@ export default class Arrow extends Sprite {
    * @private
    */
   _handleMouseDown() {
-    if(this._tween) this._tween.kill();
+    if (this._tween) this._tween.kill();
     this.scale.set(0.9);
   }
 
@@ -27,6 +32,11 @@ export default class Arrow extends Sprite {
    * @private
    */
   _handleMouseUp() {
-    this._tween = gsap.to(this.scale, { x: 1, y: 1, ease: "elastic.out(1, 0.4)", duration: 0.8});
+    this._tween = gsap.to(this.scale, {
+      x: 1,
+      y: 1,
+      ease: 'elastic.out(1, 0.4)',
+      duration: 0.8,
+    });
   }
 }

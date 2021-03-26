@@ -1,5 +1,4 @@
 import { Container, Graphics, Text } from 'pixi.js';
-import gsap from 'gsap';
 
 export default class ProgressBar extends Container {
   /**
@@ -22,14 +21,23 @@ export default class ProgressBar extends Container {
     this._bar = null;
     this._badge = null;
 
+    this._init();
+  }
+
+  /**
+   * @private
+   */
+  _init() {
     this._createBackground();
     this._createBadge();
     this._createBar();
-
-    this.set({ value });
   }
 
-  set({ value }) {
+  /**
+   * @param {String} value The value on top of the bar
+   * @public
+   */
+  setValue({ value }) {
     this._value = value;
     this._badge.getChildByName('value').text = `${this._label.toUpperCase()}: ${
       this._value
@@ -40,33 +48,17 @@ export default class ProgressBar extends Container {
   }
 
   /**
-   * @readonly
-   * @memberof ProgressBar
-   * @returns {PIXI.Graphics}
-   */
-  get bar() {
-    return this._bar;
-  }
-
-  /**
-   * @readonly
-   * @memberof ProgressBar
-   * @returns {PIXI.Graphics}
-   */
-  get background() {
-    return this._background;
-  }
-
-  /**
    * @private
    */
   _createBackground() {
     this._background = new Graphics();
+
     this._background.beginFill(0x000000);
     this._background.drawRect(0, 0, this._width, 25);
     this._background.endFill();
     this._background.alpha = 0.1;
     this._background.x = -this._width / 2;
+
     this.addChild(this._background);
   }
 
@@ -75,10 +67,12 @@ export default class ProgressBar extends Container {
    */
   _createBar() {
     this._bar = new Graphics();
+
     this._bar.beginFill(0x2a9df3);
     this._bar.drawRect(0, 0, this._value * 5, 25);
     this._bar.endFill();
     this._bar.x = -this._width / 2;
+
     this.addChild(this._bar);
   }
 
@@ -87,6 +81,7 @@ export default class ProgressBar extends Container {
    */
   _createBadge() {
     this._badge = new Container();
+
     const text = new Text(`${this._label.toUpperCase()}: ${this._value}`, {
       fontSize: 11,
       fill: 0x000000,
@@ -95,6 +90,7 @@ export default class ProgressBar extends Container {
     });
     text.name = 'value';
     text.anchor.set(0.5, 1);
+
     this._badge.addChild(text);
     this.addChild(this._badge);
   }

@@ -16,27 +16,46 @@ export default class Play extends Scene {
     footer.y = window.innerHeight / 2 - footer.height;
     this.addChild(footer);
 
+    this._createRockets();
+    this._createArrows();
+    this._createStats();
+    this._setCurrentSlide(0);
+  }
+
+  /**
+   * @private
+   */
+  _createRockets() {
     this._rockets = [
       new Rocket1(),
       new Rocket2(),
       new Rocket3(),
       new Rocket4(),
     ];
-    this._active = null;
+  }
 
+  /**
+   * @private
+   */
+  _createArrows() {
     const arrowLeft = new Arrow();
     arrowLeft.name = 'arrow-left';
     arrowLeft.x = -500;
-    arrowLeft.on('click', () => this.prev());
+    arrowLeft.on('click', () => this._prev());
     this.addChild(arrowLeft);
 
     const arrowRight = new Arrow();
     arrowRight.name = 'arrow-right';
     arrowRight.x = 500;
     arrowRight.angle = 180;
-    arrowRight.on('click', () => this.next());
+    arrowRight.on('click', () => this._next());
     this.addChild(arrowRight);
+  }
 
+  /**
+   * @private
+   */
+  _createStats() {
     this._stats = new Stats({
       data: {
         speed: {
@@ -55,11 +74,12 @@ export default class Play extends Scene {
     });
     this._stats.y = 130;
     this.addChild(this._stats);
-
-    this.setRocket(0);
   }
 
-  setRocket(index) {
+  /**
+   * @private
+   */
+  _setCurrentSlide(index) {
     this._rockets.forEach((r) => this.removeChild(r));
 
     const rocket = this._rockets[index];
@@ -67,7 +87,7 @@ export default class Play extends Scene {
     rocket.y = -150;
     this.addChild(rocket);
 
-    this._stats.set({
+    this._stats.setProgressBarData({
       acceleration: rocket.acceleration,
       speed: rocket.speed,
       handling: rocket.handling,
@@ -76,16 +96,22 @@ export default class Play extends Scene {
     this._active = index;
   }
 
-  next() {
+  /**
+   * @private
+   */
+  _next() {
     const index =
       this._active < this._rockets.length - 1 ? this._active + 1 : 0;
-    this.setRocket(index);
+    this._setCurrentSlide(index);
   }
 
-  prev() {
+  /**
+   * @private
+   */
+  _prev() {
     const index =
       this._active > 0 ? this._active - 1 : this._rockets.length - 1;
-    this.setRocket(index);
+    this._setCurrentSlide(index);
   }
 
   /**

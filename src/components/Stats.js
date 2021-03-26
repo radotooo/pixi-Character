@@ -1,7 +1,15 @@
 import { Container } from 'pixi.js';
 import ProgressBar from './ProgressBar';
 
+/**
+ * Initializes a new instance of Stats
+ * @class
+ * @extends {PIXI.Container}
+ */
 export default class Stats extends Container {
+  /**
+   * @param {Object} data The stats data
+   */
   constructor({ data = [] } = {}) {
     super();
 
@@ -9,26 +17,35 @@ export default class Stats extends Container {
 
     this._data = data;
     this._items = {};
-    Object.keys(this._data).forEach((key) =>
-      this._createProgressBar(key, this._data[key])
-    );
+
+    this._createProgressBar();
   }
 
-  set(data = {}) {
+  /**
+   * @param {Object} data The values for progressBar
+   * @public
+   */
+  setProgressBarData(data = {}) {
     Object.keys(data).forEach((key) => {
-      this._items[key].set({ value: data[key] });
+      this._items[key].setValue({ value: data[key] });
     });
   }
 
-  _createProgressBar(key, { label, value, width }) {
-    const progressBar = new ProgressBar({
-      label,
-      width,
-      value,
-    });
-    progressBar.y = this.children.length * progressBar.height;
-    this.addChild(progressBar);
+  /**
+   * @private
+   */
+  _createProgressBar() {
+    Object.keys(this._data).forEach((key) => {
+      const { label, width, value } = this._data[key];
+      const progressBar = new ProgressBar({
+        label,
+        width,
+        value,
+      });
+      progressBar.y = this.children.length * progressBar.height;
+      this.addChild(progressBar);
 
-    this._items[key] = progressBar;
+      this._items[key] = progressBar;
+    });
   }
 }
